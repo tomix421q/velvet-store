@@ -36,5 +36,9 @@ export async function GET() {
     }
   }
 
-  return NextResponse.redirect(process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'http://localhost:3000/')
+  return NextResponse.redirect(
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/'
+      : 'https://velvet-store-920rjjo5r-tomix421qs-projects.vercel.app/'
+  )
 }
