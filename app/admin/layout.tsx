@@ -22,8 +22,7 @@ const getData = async () => {
 }
 
 const AdminLayout = async ({ children }: { children: ReactNode }) => {
-  // const data = await getData()
-  const data = { email: 'test' }
+  const data = await getData()
 
   return (
     <div className='flex w-full flex-col max-w-7xl mx-auto '>

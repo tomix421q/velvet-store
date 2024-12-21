@@ -3,7 +3,7 @@ import ImageSlider from '@/components/store/ImageSlider'
 import prisma from '@/utills/db'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { StarIcon } from 'lucide-react'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { AddToCart } from '@/components/store/AddToCart'
 
 const getData = async (productId: string) => {
