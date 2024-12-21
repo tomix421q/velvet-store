@@ -10,27 +10,20 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { getKindeServerSession, LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server'
+import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server'
 import { CircleUser, MenuIcon } from 'lucide-react'
 import { ReactNode } from 'react'
 import { checkUserPermission } from '../actions'
-import { redirect } from 'next/navigation'
 import { unstable_noStore as noStore } from 'next/cache'
 
-// const getData = async () => {
-//   const data = await checkUserPermission()
-//   return data
-// }
+const getData = async () => {
+  const data = await checkUserPermission()
+  return data
+}
 
 const AdminLayout = async ({ children }: { children: ReactNode }) => {
-  // const data = await getData()
   noStore()
-  const { getUser } = getKindeServerSession()
-  const user = await getUser()
-
-  if (!user || user.email !== 'zilka.tomas421@gmail.com') {
-    redirect('/')
-  }
+  const data = await getData()
 
   return (
     <div className='flex w-full flex-col max-w-7xl mx-auto '>
@@ -63,7 +56,7 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel className='text-secondary font-light'>My account</DropdownMenuLabel>
-            <DropdownMenuLabel className='text-primary'>{user?.email}</DropdownMenuLabel>
+            <DropdownMenuLabel className='text-primary'>{data?.email}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <LogoutLink className='cursor-pointer'>Logout</LogoutLink>
