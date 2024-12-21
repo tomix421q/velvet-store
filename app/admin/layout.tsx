@@ -26,10 +26,10 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
 
   const { getUser } = getKindeServerSession()
   const user = await getUser()
-  console.log(user)
-  // if (!user || user.email !== 'zilka.tomas421@gmail.com') {
-  //   redirect('/')
-  // }
+
+  if (!user || user.email !== 'zilka.tomas421@gmail.com') {
+    redirect('/')
+  }
 
   return (
     <div className='flex w-full flex-col max-w-7xl mx-auto '>
