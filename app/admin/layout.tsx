@@ -26,7 +26,7 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
 
   const { getUser } = getKindeServerSession()
   const user = await getUser()
-
+  console.log(user)
   // if (!user || user.email !== 'zilka.tomas421@gmail.com') {
   //   redirect('/')
   // }
@@ -71,24 +71,7 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
         </DropdownMenu>
       </header>
       {/*  */}
-      <main className='my-5 px-4 sm:px-6 lg:px-8'>
-        <div style={{ padding: '20px', background: '#f0f0f0', margin: '20px' }}>
-          <h3>Debug Info:</h3>
-          <pre>
-            {JSON.stringify(
-              {
-                userExists: !!user,
-                userEmail: user?.email,
-                userData: user,
-              },
-              null,
-              2
-            )}
-          </pre>
-          ' '
-        </div>
-        {children}
-      </main>
+      <main className='my-5 px-4 sm:px-6 lg:px-8'>{children}</main>
     </div>
   )
 }
