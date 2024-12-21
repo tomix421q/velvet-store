@@ -54,7 +54,7 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel className='text-secondary font-light'>My account</DropdownMenuLabel>
-            <DropdownMenuLabel className='text-primary'>{data.email}</DropdownMenuLabel>
+            <DropdownMenuLabel className='text-primary'>{data?.email}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <LogoutLink className='cursor-pointer'>Logout</LogoutLink>

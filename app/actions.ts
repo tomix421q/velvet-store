@@ -21,7 +21,7 @@ export const checkUserPermission = async () => {
         id: user.id,
       },
     })
-    if (data?.role !== 'admin') redirect('/')
+    // if (data?.role !== 'admin') redirect('/')
     return data
   } else {
     redirect('/')
