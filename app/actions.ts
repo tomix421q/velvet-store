@@ -13,19 +13,32 @@ export const checkUser = async () => {
 }
 
 export const checkUserPermission = async () => {
-  const { getUser } = getKindeServerSession()
-  const user = await getUser()
-  if (user) {
+  try {
+    const { getUser } = getKindeServerSession()
+    const user = await getUser()
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
     const data = await prisma.user.findUnique({
-      where: {
-        id: user.id,
-      },
+      where: { id: user.id },
     })
 
-    if (data?.role !== 'admin') redirect('/')
+    if (!data) {
+      throw new Error('DB user not found')
+    }
+
+    if (data.role !== 'admin') {
+      throw new Error('Not admin role')
+    }
+
     return data
-  } else {
-    redirect('/')
+  } catch (error) {
+    // Namiesto console.log môžete použiť error handling ktorý uvidíte
+
+    // alebo
+    throw error // a zachytiť to v error boundary
   }
 }
 
