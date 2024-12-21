@@ -27,7 +27,7 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
   const { getUser } = getKindeServerSession()
   const user = await getUser()
 
-  if (!user || user.email !== 'zilka.tomas421@gmail.com') {
+  if (user.email !== 'zilka.tomas421@gmail.com') {
     redirect('/')
   }
 
