@@ -15,6 +15,7 @@ import { CircleUser, MenuIcon } from 'lucide-react'
 import { ReactNode } from 'react'
 import { checkUserPermission } from '../actions'
 import { redirect } from 'next/navigation'
+import { unstable_noStore as noStore } from 'next/cache'
 
 // const getData = async () => {
 //   const data = await checkUserPermission()
@@ -23,7 +24,7 @@ import { redirect } from 'next/navigation'
 
 const AdminLayout = async ({ children }: { children: ReactNode }) => {
   // const data = await getData()
-
+  noStore()
   const { getUser } = getKindeServerSession()
   const user = await getUser()
 
