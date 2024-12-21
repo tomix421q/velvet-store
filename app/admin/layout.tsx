@@ -1,18 +1,77 @@
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import AdminNavigation from '@/components/admin/AdminNavigation'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Separator } from '@/components/ui/separator'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { getKindeServerSession, LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server'
+import { CircleUser, MenuIcon } from 'lucide-react'
 import { ReactNode } from 'react'
+import { checkUserPermission } from '../actions'
+import { redirect } from 'next/navigation'
+
+// const getData = async () => {
+//   const data = await checkUserPermission()
+//   return data
+// }
 
 const AdminLayout = async ({ children }: { children: ReactNode }) => {
-  try {
-    console.log('1. Začínam AdminLayout')
+  // const data = await getData()
 
-    const { getUser } = getKindeServerSession()
-    console.log('2. getKindeServerSession OK')
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
 
-    const user = await getUser()
+  // if (!user || user.email !== 'zilka.tomas421@gmail.com') {
+  //   redirect('/')
+  // }
 
-    // Tu pridáme debug komponentu ktorá zobrazí dáta
-    return (
-      <div>
+  return (
+    <div className='flex w-full flex-col max-w-7xl mx-auto '>
+      <header className='sticky top-0 flex h-20 items-center justify-between gap-4  bg-gradient-to-b from-secondary to-background  px-4 z-20 '>
+        {/* DESKTOP */}
+        <nav className='hidden font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6'>
+          <AdminNavigation />
+        </nav>
+        {/* MOBILE */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button className='md:hidden' variant={'outline'} size={'icon'}>
+              <MenuIcon className='!size-6' />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side={'left'}>
+            <SheetTitle className='mb-6'>Menu</SheetTitle>
+            <Separator />
+            <nav className='grid gap-6 text-lg font-medium mt-10'>
+              <AdminNavigation />
+            </nav>
+          </SheetContent>
+        </Sheet>
+        {/*  */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant={'secondary'} size={'icon'}>
+              <CircleUser className='!size-6' />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end'>
+            <DropdownMenuLabel className='text-secondary font-light'>My account</DropdownMenuLabel>
+            <DropdownMenuLabel className='text-primary'>{user?.email}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <LogoutLink className='cursor-pointer'>Logout</LogoutLink>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </header>
+      {/*  */}
+      <main className='my-5 px-4 sm:px-6 lg:px-8'>
         <div style={{ padding: '20px', background: '#f0f0f0', margin: '20px' }}>
           <h3>Debug Info:</h3>
           <pre>
@@ -26,33 +85,11 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
               2
             )}
           </pre>
+          ' '
         </div>
-
-        {/* Ak chcete vidieť pôvodný layout, nechajte tu podmienku */}
-        {!user || user.email !== 'zilka.tomas421@gmail.com' ? (
-          <div>Unauthorized - redirecting...</div>
-        ) : (
-          // Váš pôvodný layout kód
-          <div className='flex w-full flex-col max-w-7xl mx-auto '>{/* ... zvyšok vášho kódu ... */}</div>
-        )}
-      </div>
-    )
-  } catch (error: any) {
-    // Zobrazíme error info namiesto redirectu
-    return (
-      <div style={{ padding: '20px', background: '#fee', margin: '20px' }}>
-        <h3>Error occurred:</h3>
-        <pre>
-          {JSON.stringify(
-            {
-              error: error.message,
-              stack: error.stack,
-            },
-            null,
-            2
-          )}
-        </pre>
-      </div>
-    )
-  }
+        {children}
+      </main>
+    </div>
+  )
 }
+export default AdminLayout
