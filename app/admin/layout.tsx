@@ -16,7 +16,6 @@ import { ReactNode } from 'react'
 import { checkUserPermission } from '../actions'
 
 const getData = async () => {
-  console.log('getData start')
   const data = await checkUserPermission()
   return data
 }
@@ -64,7 +63,14 @@ const AdminLayout = async ({ children }: { children: ReactNode }) => {
         </DropdownMenu>
       </header>
       {/*  */}
-      <main className='my-5 px-4 sm:px-6 lg:px-8'> {children}</main>
+      <main className='my-5 px-4 sm:px-6 lg:px-8'>
+        {children}
+        <pre>
+          {data?.email}
+          {data?.role}
+          {data?.firstName}
+        </pre>
+      </main>
     </div>
   )
 }
