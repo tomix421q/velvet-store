@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### npx create-next-app@latest
 
-## Getting Started
+### shadcn installs -> sidebar dropdownmenu sheet card table select Textarea Switch Dialog Avatar carousel
 
-First, run the development server:
+### npm install embla-carousel-autoplay --save
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### prisma
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- npm install prisma --save-dev
+- npx prisma
+- npx prisma init
+- datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+  }
+- DATABASE_URL="postgresql://neondb_owner:\*\*\*\*@ep-broad-pond-a2xwc2by-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require" <--- NEON ENV
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- utills/db -> (create singleton)
+  import { PrismaClient } from '@prisma/client'
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+const prismaClientSingleton = () => {
+return new PrismaClient()
+}
 
-## Learn More
+declare const globalThis: {
+prismaGlobal: ReturnType<typeof prismaClientSingleton>
+} & typeof global
 
-To learn more about Next.js, take a look at the following resources:
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+export default prisma
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
 
-## Deploy on Vercel
+### kinde auth
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- npm i @kinde-oss/kinde-auth-nextjs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### react hook form && zod
+
+- npm install react-hook-form
+- npm i @hookform/resolvers
+- npm i zod

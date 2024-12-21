@@ -1,0 +1,101 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @unique
+  role Role @default(user)
+  email String
+  firstName String
+  lastName String
+  profileImage String
+  order Order[]
+  createAt DateTime @default(now())
+}
+
+enum Role {
+  user
+  admin
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  description String
+  status ProductStatus
+  price Int
+  images String[]
+  category Category
+  isFeatured Boolean @default(false)
+  reviews Review[]
+  createAt DateTime @default(now())
+}
+
+model Review {
+  id String @id @default(uuid())
+  fullName String
+  rating Int @default(5)
+  body String
+  Product Product? @relation(fields: [productId],references: [id])
+  productId String
+  createdAt DateTime @default(now())
+}
+
+enum ProductStatus {
+  published
+  draft
+  archived
+}
+
+enum Category {
+  velvet_calm
+  velvet_comfort
+  velvet_glow
+  velvet_aura
+  velvet_bloom
+  velvet_essence
+  velvet_other
+}
+
+model Order {
+  id String @id @default(uuid())
+  status OrderStatus @default(pending)
+  amount Int
+  User User? @relation(fields: [userId] , references: [id])
+  userId String?
+  createAt DateTime @default(now())
+  items OrderItem[]
+}
+enum OrderStatus {
+  pending
+  complete
+  declined
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+  order Order @relation(fields: [orderId] , references: [id])
+  orderId String
+  productId String
+  name String
+  price Int
+  quantity Int
+}
+
+model Banner {
+  id String @id @default(uuid())
+  title String?
+  imageString String
+  index Int
+  createdAt DateTime @default(now())
+}
+
+
+
+
