@@ -12,10 +12,6 @@ export const AddToCart = ({ userId, productData, inCart }: { userId: string; pro
   const productId: string = productData.id
   let existingItemIndex: number
 
-  const path = usePathname()
-  const userPath = path
-  console.log(path)
-
   useEffect(() => {
     const cart = cartStorage.get(userId)
     if (!cart) return
@@ -104,7 +100,7 @@ export const AddToCart = ({ userId, productData, inCart }: { userId: string; pro
 
   return (
     <>
-      <div className='mt-20 flex flex-col items-center'>
+      <div className={`mt-20 flex flex-col items-center ${userId && 'hidden'}`}>
         <h2 className='text-red-500 tracking-wider uppercase text-center'>Please login or register for next actions</h2>
         <div className='space-x-12 mt-4'>
           <Button asChild variant={'default'} size={'lg'}>
