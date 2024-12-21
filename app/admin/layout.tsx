@@ -16,6 +16,7 @@ import { ReactNode } from 'react'
 import { checkUserPermission } from '../actions'
 
 const getData = async () => {
+  console.log('getData start')
   const data = await checkUserPermission()
   return data
 }

@@ -13,10 +13,8 @@ export const checkUser = async () => {
 }
 
 export const checkUserPermission = async () => {
-  console.log('start action')
   const { getUser } = getKindeServerSession()
   const user = await getUser()
-  console.log('USER : }' + user)
   if (user) {
     const data = await prisma.user.findUnique({
       where: {
