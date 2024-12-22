@@ -1,11 +1,12 @@
 'use client'
-import { ShoppingBagIcon } from 'lucide-react'
+import { ShoppingBagIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import UserDropdown from './UserDropdown'
 import { Button } from '../ui/button'
 import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components'
 import { cartStorage } from '@/utills/cartStorage'
 import { useEffect, useState } from 'react'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
 
 const BagNavbar = ({ user }: { user: any }) => {
   const [total, setTotal] = useState(0)
@@ -31,14 +32,36 @@ const BagNavbar = ({ user }: { user: any }) => {
           />
         </>
       ) : (
-        <div className='hidden sm:flex md:flex-1 md:items-center md:justify-end md:space-x-2'>
-          <Button asChild variant={'ghost'}>
-            <LoginLink>Sign in</LoginLink>
-          </Button>
-          <span className='h-6 w-px bg-gray-200'></span>
-          <Button asChild variant={'ghost'}>
-            <RegisterLink>Create Account</RegisterLink>
-          </Button>
+        <div className='flex items-center justify-end md:space-x-2'>
+          <div className={`hidden sm:flex`}>
+            <Button asChild variant={'ghost'}>
+              <LoginLink>Sign in</LoginLink>
+            </Button>
+            <span className='h-6 w-px bg-gray-200 my-auto'></span>
+            <Button asChild variant={'ghost'}>
+              <RegisterLink>Create Account</RegisterLink>
+            </Button>
+          </div>
+
+          {/* mobile icons  */}
+          <div className='flex sm:hidden'>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className='cursor-pointer'>
+                <Button size={'icon'} variant={'ghost'}>
+                  <UserIcon className='!size-8' />
+                </Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent className='bg-black p-2 rounded-xl z-20' align='end' forceMount>
+                <DropdownMenuItem asChild>
+                  <LoginLink>Login</LoginLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <RegisterLink>Create Account</RegisterLink>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       )}
     </div>

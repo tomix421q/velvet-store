@@ -25,7 +25,7 @@ const ImageSlider = ({ images }: iImagesProps) => {
   }
 
   return (
-    <div className='grid gap-6 md:gap-3 items-start border border-secondary/20 p-4 rounded-lg'>
+    <div className='grid gap-6 md:gap-3 items-start border border-secondary/20 p-4 rounded-lg z-10'>
       <div className='relative overflow-hidden rounded-lg'>
         <Image src={images[mainImageIndex]} alt={'Product image'} width={900} height={900} priority className='object-cover ' />
 
