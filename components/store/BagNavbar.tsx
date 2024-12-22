@@ -19,7 +19,7 @@ const BagNavbar = ({ user }: { user: any }) => {
 
   return (
     <div className='flex items-center'>
-      {userId ? (
+      {user ? (
         <>
           <Link href={'/bag'} className='group p-2 flex items-center mr-2'>
             <ShoppingBagIcon className='size-6 text-gray-400 group-hover:text-gray-500' />
@@ -31,7 +31,7 @@ const BagNavbar = ({ user }: { user: any }) => {
           />
         </>
       ) : (
-        <div className='hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2'>
+        <div className='hidden sm:flex md:flex-1 md:items-center md:justify-end md:space-x-2'>
           <Button asChild variant={'ghost'}>
             <LoginLink>Sign in</LoginLink>
           </Button>
